@@ -1,4 +1,4 @@
-# Introduction-to-Robotics
+# Introduction to Robotics
 
 This repository is dedicated to the Introduction to Robotics course (sem. I, 2019 - 2020, @FMI-UNIBUC).
 
