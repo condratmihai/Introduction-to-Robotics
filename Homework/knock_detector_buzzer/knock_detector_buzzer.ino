@@ -57,7 +57,7 @@ void loop(){
   checkButtonInput();
   
   buzzInValue = analogRead(buzzInPin);
-  Serial.println(playing);
+  //Serial.println(playing);
   //Serial.println(buzzInValue - threshold);
 
   if (buzzInValue >= threshold && playing == false) 
