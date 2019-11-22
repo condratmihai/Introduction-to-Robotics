@@ -28,11 +28,12 @@ const int noOfDisplays = 4;
 const int noOfDigits = 10;
 
 int dotState = LOW;
+int dpState = LOW;
 int swState = LOW;
 int lastSwState = HIGH;
 
 int number = 0;
-int digit[4] = {0};
+int digit[4] = {0, 0, 0, 0};
 int lastDigit = 0;
 int segment = 0;
 
@@ -97,11 +98,11 @@ void changeDotState()
       dotState = !dotState;
     }
   }
-
+  //Serial.println(lastSwState);
   lastSwState = swState;
 }
 
-void blinkDot(dot)
+void blinkDot(int dot)
 {
   //blink the dot at the corresponding segment
 }
@@ -132,14 +133,17 @@ void changeDigit()
 
   if (xValue > minThreshold && xValue < maxThreshold)
     joyMoved = false;
+
+    dpState = HIGH;
   
   //Serial.print("Digit: ");
   //Serial.println(digit[segment]);
-  delay(1);
+  //delay(1);
 }
 
 void changeSegment()
 {
+  
   if (yValue < minThreshold && joyMoved == false)
   {
     if (segment > 0)
@@ -165,11 +169,11 @@ void changeSegment()
   if (yValue > minThreshold && yValue < maxThreshold)
     joyMoved = false;
 
-  blinkDot(segment);
+  dpState = !dpState;
 
   //Serial.print("Segment: ");
   //Serial.println(segment);
-  delay(1);
+  //delay(1);
 }
 
 void printJoystickValues()
@@ -199,11 +203,16 @@ void loop()
   
   changeDotState();
 
-  if (dotState)
+  if (!dotState)
+  {
     changeSegment();
+    showDigit(segment);
+  }
+    
   else
+  {
     changeDigit();
-  
-  delay(10);
+    displayNumber(digit[segment], HIGH);
+  }
 
 }
