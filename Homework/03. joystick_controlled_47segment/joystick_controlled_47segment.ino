@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+//digit:
+//off:            not selected
+//on, but dim:    selected, but not locked-in
+//on, but bright: selected and locked-in
+
 const int pinSW = 0;
 const int pinX = A0;
 const int pinY = A1;
@@ -102,9 +107,10 @@ void changeDotState()
   lastSwState = swState;
 }
 
-void blinkDot(int dot)
+void dimDisplay()
 {
-  //blink the dot at the corresponding segment
+  for (int i = 0; i < segSize - 1; i++)
+      digitalWrite(segments[i], 0);
 }
 
 void changeDigit()
@@ -207,6 +213,8 @@ void loop()
   {
     changeSegment();
     showDigit(segment);
+    displayNumber(digit[segment], LOW);
+    dimDisplay(); 
   }
     
   else
